@@ -11,13 +11,20 @@ public class PickupUI extends GuiIngame {
     private static final long DISPLAY_TIME_MS = 4000L;
     private static final int MAX_ENTRIES = 6;
 
-    private final Minecraft client;
     private static final LinkedHashMap entries = new LinkedHashMap();
     private static final RenderItem itemRenderer = new RenderItem();
 
-    public PickupUI(Minecraft minecraft) {
+    private final Minecraft client;
+    private final GuiIngame parent;
+
+    public PickupUI(Minecraft minecraft, GuiIngame parent) {
         super(minecraft);
         this.client = minecraft;
+        this.parent = parent;
+    }
+
+    public static void clearEntries() {
+        entries.clear();
     }
 
     public static void addPickup(ItemStack stack, int amount) {
@@ -55,8 +62,34 @@ public class PickupUI extends GuiIngame {
     }
 
     @Override
+    public void addChatMessage(String message) {
+        if (parent != null) {
+            parent.addChatMessage(message);
+        } else {
+            super.addChatMessage(message);
+        }
+    }
+
+    @Override
+    public void updateTick() {
+        if (parent != null) {
+            parent.updateTick();
+        } else {
+            super.updateTick();
+        }
+    }
+
+    @Override
     public void renderGameOverlay(float partialTicks, boolean flag, int mouseX, int mouseY) {
-        super.renderGameOverlay(partialTicks, flag, mouseX, mouseY);
+        if (parent != null) {
+            parent.renderGameOverlay(partialTicks, flag, mouseX, mouseY);
+        } else {
+            super.renderGameOverlay(partialTicks, flag, mouseX, mouseY);
+        }
+
+        if (client == null || client.theWorld == null || client.thePlayer == null) {
+            return;
+        }
 
         ScaledResolution sr =
                 new ScaledResolution(client.gameSettings, client.displayWidth, client.displayHeight);

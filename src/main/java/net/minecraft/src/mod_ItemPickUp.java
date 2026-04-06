@@ -1,12 +1,11 @@
 package net.minecraft.src;
 
 import net.minecraft.client.Minecraft;
-import org.lwjgl.input.Keyboard;
 
 public class mod_ItemPickUp extends BaseMod {
     public static String welcomeMessage = "\247eItem PickUp mod ready.";
-    public static boolean showFacing = true;
 
+    private boolean installedForCurrentWorld = false;
     private boolean announcedForCurrentWorld = false;
 
     public mod_ItemPickUp() {
@@ -15,7 +14,7 @@ public class mod_ItemPickUp extends BaseMod {
 
     @Override
     public String Version() {
-        return "1.0.0";
+        return "1.1.0";
     }
 
     @Override
@@ -24,10 +23,6 @@ public class mod_ItemPickUp extends BaseMod {
 
         if (mc == null || mc.thePlayer == null || player != mc.thePlayer) {
             return;
-        }
-
-        if (!(mc.ingameGUI instanceof PickupUI)) {
-            mc.ingameGUI = new PickupUI(mc);
         }
 
         int amount = item.stackSize;
@@ -40,14 +35,16 @@ public class mod_ItemPickUp extends BaseMod {
 
     @Override
     public boolean OnTickInGame(Minecraft minecraft) {
-        if (minecraft.theWorld == null || minecraft.thePlayer == null) {
+        if (minecraft == null || minecraft.theWorld == null || minecraft.thePlayer == null) {
+            installedForCurrentWorld = false;
             announcedForCurrentWorld = false;
+            PickupUI.clearEntries();
             return true;
         }
 
-
-        if (!(minecraft.ingameGUI instanceof PickupUI)) {
-            minecraft.ingameGUI = new PickupUI(minecraft);
+        if (!installedForCurrentWorld) {
+            minecraft.ingameGUI = new PickupUI(minecraft, minecraft.ingameGUI);
+            installedForCurrentWorld = true;
         }
 
         if (!announcedForCurrentWorld) {
