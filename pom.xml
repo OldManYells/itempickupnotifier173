@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.retromc.example</groupId>
-    <artifactId>beta-evolutions-example-mod</artifactId>
+    <groupId>com.github.tacf</groupId>
+    <artifactId>item-pickup-173</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Beta Evolutions Example Mod</name>
+    <name>Item PickUp 173</name>
     <packaging>jar</packaging>
 
     <properties>
@@ -50,7 +50,7 @@
     </dependencies>
 
     <build>
-        <finalName>beta-evolutions-example-mod</finalName>
+        <finalName>item-pickup-173</finalName>
 
         <plugins>
             <plugin>
