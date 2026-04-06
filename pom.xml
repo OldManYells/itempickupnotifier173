@@ -6,7 +6,7 @@
 
     <groupId>com.github.tacf</groupId>
     <artifactId>item-pickup-173</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>Item PickUp 173</name>
     <packaging>jar</packaging>
 
